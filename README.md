@@ -313,7 +313,7 @@ Bank statements and KYC documents are stored in:
 
 ### Deployment Design
 
-## Backend Deployment
+#### Backend Deployment
 
 - Platform: Render
 - Service: FastAPI (Uvicorn ASGI server)
@@ -321,23 +321,23 @@ Bank statements and KYC documents are stored in:
 - API Documentation (Swagger): https://credisure-assessment-repository-backend.onrender.com/docs
 
 
-## Frontend Deployment
+#### Frontend Deployment
 - Platform: Vercel (or planned if not yet deployed)
 - Framework: Next.js (TypeScript)
 
 
-## Database Deployment
+#### Database Deployment
 - Platform: Railway MySQL (Managed Database)
 - Engine: MySQL 9.x
 - Connection: Provided via Railway proxy URL
 Note: Tables are auto-created via SQLAlchemy in development mode.
 
 
-## File Storage
+#### File Storage
 - Current: Local server storage (/storage or /uploads inside backend project)
 - Production-ready option: AWS S3 (not yet implemented)
 
 
-## Monitoring & Logging
+#### Monitoring & Logging
 - Current: Render logs + Uvicorn logs
 - Future improvement: Sentry / CloudWatch integration (not yet configured)
