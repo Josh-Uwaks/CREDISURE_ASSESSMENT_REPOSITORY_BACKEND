@@ -13,6 +13,10 @@ This repository contains the complete implementation of the backend API system a
 
 ---
 
+## Live Demo
+
+- **Backend API**: [https://credisure-assessment-repository-backend.onrender.com/docs](https://credisure-assessment-repository-backend.onrender.com/docs#/)
+
 ## Table of Contents
 
 1. [Project Overview](#project-overview)
@@ -109,96 +113,95 @@ MySQL Database + File Storage (S3-ready)
 
 --- 
 
-### API Endpoint
+## API Endpoints
 
-Authentication
+### Authentication
 
-- POST /auth/register -> Create User Account.
-- POST /auth/login → Authenticate user & return JWT.
+- `POST /auth/register` → Create User Account.
+- `POST /auth/login` → Authenticate user & return JWT.
 
-KYC
+### KYC
 
-- POST /kyc/ -> Submit KYC information.
+- `POST /kyc/` → Submit KYC information.
 
 Stores user identity details including:
 - Name, Address, ID verification Data, Date of Birth.
 
-Credit Assessment
+### Credit Assessment
 
-- POST /assessment/
+- `POST /assessment/`
 
 Generates Credit Score based on:
 - monthly income.
 - monthly expense.
 - existing loan.
 
-File Upload
+### File Upload
 
-- POST /upload/ -> Uploads bank statement (PDF) and stores metadata
+- `POST /upload/` → Uploads bank statement (PDF) and stores metadata
 
 ---
 
-### Database Design Summary
+## Database Design Summary
 
-The System uses a relational MySQL Database with the following entities.
+The system uses a relational MySQL Database with the following entities:
 
-- users
-- kyc_records
-- uploaded_documents
-- credit_assessments
-- loan_application
-- businesses
+- `users`
+- `kyc_records`
+- `uploaded_documents`
+- `credit_assessments`
+- `loan_applications`
+- `businesses`
 
 
-// ---------- USERS TABLE ----------
-Table users {
-  id INT [pk, increment]
-  email VARCHAR(255) [unique, not null]
-  password_hash VARCHAR(255) [not null]
-  created_at TIMESTAMP [default: `CURRENT_TIMESTAMP`]
-  updated_at TIMESTAMP [default: `CURRENT_TIMESTAMP`]
+### Users Table
+
+```sql
+CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   
-  indexes {
-    email [unique]
-  }
-}
+  INDEX idx_email (email)
+);
+```
 
-// ---------- KYC RECORDS TABLE ----------
-Table kyc_records {
-  id INT [pk, increment]
-  user_id INT [ref: > users.id, not null]
-
-  title VARCHAR(20)
-  first_name VARCHAR(100) [not null]
-  middle_name VARCHAR(100)
-  last_name VARCHAR(100) [not null]
-
-  gender VARCHAR(20)
-  date_of_birth DATE
-
-  mobile_number VARCHAR(20)
-  address VARCHAR(255)
-  city VARCHAR(100)
-  state VARCHAR(100)
-  country VARCHAR(100)
-  postal_code VARCHAR(20)
-
-  id_type VARCHAR(50)
-  id_number VARCHAR(100)
-  id_document_path VARCHAR(500)
-
-  kyc_status VARCHAR(20) [default: 'pending']
-
-  submitted_at TIMESTAMP [default: `CURRENT_TIMESTAMP`]
-  verified_at TIMESTAMP [null]
-  created_at TIMESTAMP [default: `CURRENT_TIMESTAMP`]
-  updated_at TIMESTAMP [default: `CURRENT_TIMESTAMP`]
-
-  indexes {
-    user_id
-    kyc_status
-  }
-}
+CREATE TABLE kyc_records (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  
+  title VARCHAR(20),
+  first_name VARCHAR(100) NOT NULL,
+  middle_name VARCHAR(100),
+  last_name VARCHAR(100) NOT NULL,
+  
+  gender VARCHAR(20),
+  date_of_birth DATE,
+  
+  mobile_number VARCHAR(20),
+  address VARCHAR(255),
+  city VARCHAR(100),
+  state VARCHAR(100),
+  country VARCHAR(100),
+  postal_code VARCHAR(20),
+  
+  id_type VARCHAR(50),
+  id_number VARCHAR(100),
+  id_document_path VARCHAR(500),
+  
+  kyc_status VARCHAR(20) DEFAULT 'pending',
+  
+  submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  verified_at TIMESTAMP NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  INDEX idx_user_id (user_id),
+  INDEX idx_kyc_status (kyc_status)
+);
 
 // ---------- CREDIT ASSESSMENTS TABLE ----------
 Table credit_assessments {
