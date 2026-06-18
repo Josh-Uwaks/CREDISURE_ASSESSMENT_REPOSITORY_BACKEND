@@ -284,13 +284,14 @@ Table businesses {
 
 ### Data Relationship
 
+```sql
 Users (1) → (M) KYC Records
 Users (1) → (M) Credit Assessments
 Users (1) → (M) Uploaded Documents
 Users (1) → (M) Loan Applications
 Users (1) → (M) Businesses
 Credit Assessments (1) → (M) Loan Applications
-
+```
 --- 
 
 ### File Storage Strategy
@@ -312,8 +313,31 @@ Bank statements and KYC documents are stored in:
 
 ### Deployment Design
 
-- Frontend: Vercel / AWS Amplify
-- Backend: AWS EC2 or ECS
-- Database: AWS RDS (MySQL)
-- Storage: AWS S3
-- Monitoring: CloudWatch + Sentry
+## Backend Deployment
+
+- Platform: Render
+- Service: FastAPI (Uvicorn ASGI server)
+- Live API URL: https://credisure-assessment-repository-backend.onrender.com
+- API Documentation (Swagger): https://credisure-assessment-repository-backend.onrender.com/docs
+
+
+## Frontend Deployment
+- Platform: Vercel (or planned if not yet deployed)
+- Framework: Next.js (TypeScript)
+
+
+## Database Deployment
+- Platform: Railway MySQL (Managed Database)
+- Engine: MySQL 9.x
+- Connection: Provided via Railway proxy URL
+Note: Tables are auto-created via SQLAlchemy in development mode.
+
+
+## File Storage
+- Current: Local server storage (/storage or /uploads inside backend project)
+- Production-ready option: AWS S3 (not yet implemented)
+
+
+## Monitoring & Logging
+- Current: Render logs + Uvicorn logs
+- Future improvement: Sentry / CloudWatch integration (not yet configured)
