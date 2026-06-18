@@ -88,6 +88,7 @@ This repository contains the complete implementation of the backend API system a
 
 ### System Architecture Overview
 
+```
 Users
   ↓ HTTPS
 Next.js Frontend (TypeScript + Tailwind)
@@ -100,6 +101,7 @@ FastAPI Backend
   └── AI Processing Service (future enhancement)
   ↓
 MySQL Database + File Storage (S3-ready)
+```
 
 ---
 
@@ -168,6 +170,7 @@ CREATE TABLE users (
 );
 ```
 
+```sql
 CREATE TABLE kyc_records (
   id INT PRIMARY KEY AUTO_INCREMENT,
   user_id INT NOT NULL,
@@ -202,8 +205,9 @@ CREATE TABLE kyc_records (
   INDEX idx_user_id (user_id),
   INDEX idx_kyc_status (kyc_status)
 );
+```
 
-// ---------- CREDIT ASSESSMENTS TABLE ----------
+```sql
 Table credit_assessments {
   id INT [pk, increment]
   user_id INT [ref: > users.id, not null]
@@ -219,8 +223,10 @@ Table credit_assessments {
     user_id
   }
 }
+```
 
-// ---------- UPLOADED DOCUMENTS TABLE ----------
+
+```sql
 Table uploaded_documents {
   id INT [pk, increment]
   user_id INT [ref: > users.id, not null]
@@ -236,8 +242,10 @@ Table uploaded_documents {
     document_type
   }
 }
+```
 
-// ---------- LOAN APPLICATIONS TABLE ----------
+
+```sql
 Table loan_applications {
   id INT [pk, increment]
   user_id INT [ref: > users.id, not null]
@@ -253,8 +261,9 @@ Table loan_applications {
     application_status
   }
 }
+```
 
-// ---------- BUSINESSES TABLE ----------
+```sql
 Table businesses {
   id INT [pk, increment]
   user_id INT [ref: > users.id, not null]
@@ -270,6 +279,7 @@ Table businesses {
     registration_number [unique]
   }
 }
+```
 
 
 ### Data Relationship
