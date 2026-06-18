@@ -68,8 +68,7 @@ app.add_middleware(
 # DATABASE INIT (SAFE)
 # =========================
 # Only auto-create tables in development
-if ENV != "production":
-    Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 # =========================
 # REGISTER ROUTES
