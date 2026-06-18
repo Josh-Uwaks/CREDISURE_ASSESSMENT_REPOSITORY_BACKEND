@@ -20,22 +20,31 @@ This repository contains the complete implementation of the backend API system a
 ## Table of Contents
 
 1. [Project Overview](#project-overview)
-2. [Technology Stack](#technology-stack)
+2. [Live Demo](#live-demo)
+3. [Technology Stack](#technology-stack)
    - [Frontend](#frontend)
    - [Backend](#backend)
    - [Database](#database)
    - [Development Tools](#development-tools)
-3. [System Architecture Overview](#system-architecture-overview)
-4. [Authentication Flow](#authentication-flow)
-5. [API Endpoint](#api-endpoint)
+4. [System Architecture Overview](#system-architecture-overview)
+5. [Setup Instructions](#setup-instructions)
+   - [Prerequisites](#prerequisites)
+   - [Backend Setup](#backend-setup)
+   - [Frontend Setup](#frontend-setup)
+   - [Environment Variables](#environment-variables)
+   - [Running with Docker](#running-with-docker)
+6. [Authentication Flow](#authentication-flow)
+7. [API Endpoints](#api-endpoints)
    - [Authentication](#authentication)
+   - [KYC](#kyc)
    - [Credit Assessment](#credit-assessment)
    - [File Upload](#file-upload)
-6. [Database Design Summary](#database-design-summary)
-7. [Data Relationship](#data-relationship)
-8. [File Storage Strategy](#file-storage-strategy)
-9. [Security Design](#security-design)
-10. [Deployment Design](#deployment-design)
+8. [Database Design Summary](#database-design-summary)
+9. [Data Relationship](#data-relationship)
+10. [File Storage Strategy](#file-storage-strategy)
+11. [Security Design](#security-design)
+12. [Deployment Design](#deployment-design)
+
 
 ---
 
@@ -103,6 +112,81 @@ FastAPI Backend
 MySQL Database + File Storage (S3-ready)
 ```
 
+---
+
+## Setup Instructions
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **Python 3.11+** - [Download](https://www.python.org/downloads/)
+- **Node.js 18+** - [Download](https://nodejs.org/)
+- **MySQL 8.0+** - [Download](https://dev.mysql.com/downloads/)
+- **Git** - [Download](https://git-scm.com/downloads)
+- **Docker** (optional) - [Download](https://www.docker.com/products/docker-desktop/)
+
+### Backend Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/credisure-assessment.git
+   cd credisure-assessment/backend
+
+2. **Create and activate a virtual environment**
+
+```sql
+  # Windows
+  python -m venv venv
+  venv\Scripts\activate
+
+  # macOS/Linux
+  python3 -m venv venv
+  source venv/bin/activate
+```
+
+3. **Install dependencies**
+
+```sql
+  pip install -r requirements.txt
+```
+
+4. **Set up environment variables**
+
+```sql
+  # Copy the example environment file
+  cp .env.example .env
+  # Edit .env with your configuration
+```
+
+5. **Create the database**
+
+```sql
+  # Login to MySQL
+  mysql -u root -p
+
+  # Create database
+  CREATE DATABASE credisure_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+  EXIT;
+```
+
+6. **Run database migrations**
+```sql
+  alembic upgrade head
+```
+
+7. Start the backend server
+
+```sql
+  uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+8. Verify the backend is running
+
+```sql
+ - API Documentation: http://localhost:8000/docs
+ - Health Check: http://localhost:8000/health
+```
 ---
 
 ### Authentication FLOW
