@@ -1,5 +1,7 @@
+from typing import Optional
+
 from pydantic import BaseModel
-from datetime import date
+from datetime import date, datetime
 
 class KYCRequest(BaseModel):
     first_name: str
@@ -25,3 +27,11 @@ class KYCRequest(BaseModel):
 class KYCResponse(BaseModel):
     message: str
     kyc_status: str
+
+
+class KYCStatusResponse(BaseModel):
+    exists: bool
+    status: str
+    submitted_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+    full_name: Optional[str] = None

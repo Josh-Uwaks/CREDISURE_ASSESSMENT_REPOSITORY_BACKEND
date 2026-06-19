@@ -1,3 +1,5 @@
+from requests import Session
+
 from app.models.kyc import KYCRecord
 
 
@@ -25,3 +27,8 @@ def create_kyc(db, user_id, payload):
     db.refresh(kyc)
 
     return kyc
+
+def get_kyc_status(db: Session, user_id: int):
+    return db.query(KYCRecord).filter(
+        KYCRecord.user_id == user_id
+    ).first()
