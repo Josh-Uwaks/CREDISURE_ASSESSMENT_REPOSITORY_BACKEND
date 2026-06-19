@@ -27,7 +27,7 @@ class KYCRecord(Base):
     id_number = Column(String(100))
     id_document_path = Column(String(255))
 
-    kyc_status = Column(String(20), default="pending")
+    kyc_status = Column(String(20), default="verified")
 
     created_at = Column(TIMESTAMP, server_default=func.now())
     updated_at = Column(
