@@ -2,7 +2,9 @@ import os
 import uuid
 from fastapi import APIRouter, UploadFile, File, Depends
 from sqlalchemy.orm import Session
-
+from typing import List
+from app.schemas.document import DocumentResponse
+from app.services.document_service import get_user_documents
 from app.core.database import get_db
 from app.core.deps import get_current_user
 from app.models.document import Document
@@ -55,3 +57,10 @@ def upload_statement(
         "document_id": document.id,
         "file_name": document.file_name
     }
+
+@router.get("/", response_model=List[DocumentResponse])
+def get_documents(
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+    return get_user_documents(db, current_user["user_id"])
