@@ -55,6 +55,7 @@ app.add_middleware(
         "http://127.0.0.1:3000",
         "http://localhost:3001",
         "http://127.0.0.1:3001",
+        "https://credisure-assessment-repository-frontend.onrender.com"
         # production frontend URL goes here
     ],
     allow_credentials=True,
