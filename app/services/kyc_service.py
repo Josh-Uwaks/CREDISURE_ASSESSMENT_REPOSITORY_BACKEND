@@ -1,5 +1,4 @@
-from requests import Session
-
+from sqlalchemy.orm import Session
 from app.models.kyc import KYCRecord
 
 
